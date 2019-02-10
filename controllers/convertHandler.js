@@ -19,6 +19,7 @@ function ConvertHandler() {
     if (!checkValidUnitRegex.test(input) && !checkNumbersRegex.test(input)) return result = 'invalid number';
     
     result = input.replace(checkValidUnitRegex,'');
+        if (input == 'kg' || input == 'lbs' || input == 'km' || input == 'mi' || input == 'gal' || input == 'l') return result = 1;
       
     switch(true) {
       case Number.isInteger(result):
@@ -39,13 +40,10 @@ function ConvertHandler() {
       case checkDoubleDecimalRegex.test(result):
         result = 'invalid number';
         break;
-      case isNaN():
-        result = 1;
-        break;
       default:
         result = parseFloat(result);
         break;
-                 }             
+                 }
   
     return result;
   };
