@@ -59,14 +59,15 @@ suite('Unit Tests', function(){
     test('For Each Valid Unit Inputs', function(done) {
       var input = ['gal','l','mi','km','lbs','kg','GAL','L','MI','KM','LBS','KG'];
       input.forEach(function(ele) {
-        //assert
+        assert.equal(convertHandler.getUnit(ele),ele);
       });
       done();
     });
     
     test('Unknown Unit Input', function(done) {
-      
-      //done();
+      var input = '7.7abc';
+      assert.equal(convertHandler.getUnit(input),'invalid unit');
+      done();
     });  
     
   });
@@ -87,7 +88,11 @@ suite('Unit Tests', function(){
   suite('Function convertHandler.spellOutUnit(unit)', function() {
     
     test('For Each Valid Unit Inputs', function(done) {
-      //see above example for hint
+      var input = ['gal','l','mi','km','lbs','kg'];
+      var expect = ['liters','gallons','kilometers','miles','kilograms','pounds'];
+      input.forEach(function(ele, i) {
+        assert.equal(convertHandler.spellOutUnit(ele).return, expect[i]);
+      });
       done();
     });
     

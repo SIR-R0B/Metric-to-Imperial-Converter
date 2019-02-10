@@ -40,10 +40,11 @@ function ConvertHandler() {
   
   this.getUnit = function(input) {
     var result;
-    var regex = /[A-Za-z]+\w/;
+    var checkValidUnitRegex = /l$|gal$|mi$|km$|kg$|lbs$/i;
     
-    result = input.match(regex).toString();
+     if (!checkValidUnitRegex.test(input)) return result = 'invalid unit';
     
+    result = input.match(checkValidUnitRegex).toString();
     return (result);
   };
   
