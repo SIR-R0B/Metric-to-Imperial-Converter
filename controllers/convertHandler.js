@@ -14,8 +14,9 @@ function ConvertHandler() {
     var checkDoubleFractionRegex = /\/{2,}/;
     var checkDoubleDecimalRegex = /\.{2,}/;
     var checkValidUnitRegex = /l$|gal$|mi$|km$|kg$|lbs$/i;
+    var checkNumbersRegex = /\d+/;
     
-    if (!checkValidUnitRegex.test(input)) return result = 'invalid number';
+    if (!checkValidUnitRegex.test(input) && !checkNumbersRegex.test(input)) return result = 'invalid number';
     
     result = input.replace(checkValidUnitRegex,'');
       
@@ -25,10 +26,21 @@ function ConvertHandler() {
         break;
       case checkSingleFractionRegex.test(result): {
         if (checkDoubleFractionRegex.test(result)) result = 'invalid number';
+        let counter = 0;
+        for(let i = 0; i < result.length; i++){
+         if (result[i] == '/') counter++;
+          if (counter > 1) {
+          result = 'invalid number';
+          break; 
+          }
+        }
         break;
       }
       case checkDoubleDecimalRegex.test(result):
         result = 'invalid number';
+        break;
+      case isNaN():
+        result = 1;
         break;
       default:
         result = parseFloat(result);
@@ -42,10 +54,12 @@ function ConvertHandler() {
     var result;
     var checkValidUnitRegex = /l$|gal$|mi$|km$|kg$|lbs$/i;
     
-     if (!checkValidUnitRegex.test(input)) return result = 'invalid unit';
-    
+     if (!checkValidUnitRegex.test(input)) {
+       return result = 'invalid unit';
+     } else {
     result = input.match(checkValidUnitRegex).toString();
     return (result);
+     }
   };
   
   this.getReturnUnit = function(initUnit) {
@@ -75,6 +89,7 @@ function ConvertHandler() {
         break;   
         
       default:
+        return result = '|invalid returnUnit|';
         break;
                     } 
     
@@ -83,6 +98,8 @@ function ConvertHandler() {
 
   this.spellOutUnit = function(unit) {
     var result;
+    
+    unit = unit.toLowerCase();
     
     switch (unit) {
         
@@ -106,6 +123,7 @@ function ConvertHandler() {
         break;   
         
       default:
+        return result = {initial: '|invalid initUnit|', return: '|invalid returnUnit|'};
         break;
                     }
     
@@ -122,7 +140,7 @@ function ConvertHandler() {
     
     var result;
     
-    initUnit = initUnit.toLowerCase();
+    initUnit = initUnit.toLowerCase().toString();
     
     initNum = eval(initNum);
     
@@ -146,7 +164,7 @@ function ConvertHandler() {
         result = initNum * kmToMi; 
         break;  
       default:
-        result = 'default';
+         return result = 'invalid returnNum';
         break;
   }
     
@@ -163,6 +181,11 @@ function ConvertHandler() {
     units = this.spellOutUnit(initUnit)
     
     result = initNum + ' ' +  units.initial + ' converts to ' + returnNum + ' ' +  units.return;
+    
+    console.log(initNum);
+    console.log(units.initial);
+    console.log(returnNum);
+    console.log(units.return);    
     
     return result;
   };
