@@ -23,28 +23,33 @@ suite('Unit Tests', function(){
     });
     
     test('Decimal Input', function(done) {
-      
-      //done();
+      var input = '3.1mi';
+      assert.equal(convertHandler.getNum(input),3.1);
+      done();
     });
     
     test('Fractional Input', function(done) {
-      
-      //done();
+      var input = '1/2km';
+      assert.equal(convertHandler.getNum(input),'1/2');
+      done();
     });
     
     test('Fractional Input w/ Decimal', function(done) {
-      
-      //done();
+      var input = '10.5/2km';
+      assert.equal(convertHandler.getNum(input),'10.5/2');
+      done();
     });
     
     test('Invalid Input (double fraction)', function(done) {
-      
-      //done();
+      var input = '3//4';
+      assert.equal(convertHandler.getNum(input),'invalid number');
+      done();
     });
     
     test('No Numerical Input', function(done) {
-      
-      //done();
+      var input = 'abc';
+      assert.equal(convertHandler.getNum(input),'invalid number');
+      done();
     }); 
     
   });
