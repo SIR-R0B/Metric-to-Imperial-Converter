@@ -19,6 +19,7 @@ function ConvertHandler() {
     if (!checkValidUnitRegex.test(input) && !checkNumbersRegex.test(input)) return result = 'invalid number';
     
     result = input.replace(checkValidUnitRegex,'');
+    
         if (input == 'kg' || input == 'lbs' || input == 'km' || input == 'mi' || input == 'gal' || input == 'l') return result = 1;
       
     switch(true) {
@@ -53,8 +54,11 @@ function ConvertHandler() {
     var checkValidUnitRegex = /l$|gal$|mi$|km$|kg$|lbs$/i;
     
      if (!checkValidUnitRegex.test(input)) {
-       return result = 'invalid unit';
+       
+       result = 'invalid unit';
+       return result;
      } else {
+       
     result = input.match(checkValidUnitRegex).toString();
     return (result);
      }
@@ -62,6 +66,11 @@ function ConvertHandler() {
   
   this.getReturnUnit = function(initUnit) {
     var result;
+    
+    if(initUnit == 'invalid unit'){
+      result = 'invalid returnUnit';
+      return result;
+    }
     
     initUnit = initUnit.toLowerCase();
     
@@ -87,7 +96,7 @@ function ConvertHandler() {
         break;   
         
       default:
-        return result = '|invalid returnUnit|';
+        return result = 'invalid returnUnit';
         break;
                     } 
     
@@ -121,7 +130,7 @@ function ConvertHandler() {
         break;   
         
       default:
-        return result = {initial: '|invalid initUnit|', return: '|invalid returnUnit|'};
+        return result = {initial: 'invalid initUnit', return: 'invalid returnUnit'};
         break;
                     }
     
@@ -137,6 +146,12 @@ function ConvertHandler() {
     const lToGal = 1/galToL;
     
     var result;
+    
+    
+    if((initNum == 'invalid number')||(initUnit == 'invalid unit')){
+      result = 'invalid returnNum';
+      return result;
+    }
     
     initUnit = initUnit.toLowerCase().toString();
     
@@ -179,11 +194,6 @@ function ConvertHandler() {
     units = this.spellOutUnit(initUnit)
     
     result = initNum + ' ' +  units.initial + ' converts to ' + returnNum + ' ' +  units.return;
-    
-    console.log(initNum);
-    console.log(units.initial);
-    console.log(returnNum);
-    console.log(units.return);    
     
     return result;
   };
